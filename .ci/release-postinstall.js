@@ -34,7 +34,7 @@ function copyRecursive(srcDir, dstDir) {
         console.log("directory already exists: " + dst);
         console.error(e);
       }
-      results = results.concat(copy(src, dst));
+      results = results.concat(copyRecursive(src, dst));
     } else {
       try {
         fs.writeFileSync(dst, fs.readFileSync(src));

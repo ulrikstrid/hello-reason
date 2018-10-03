@@ -14,7 +14,7 @@ const packageJson = JSON.stringify(
       postinstall: "node ./postinstall.js"
     },
     bin: {
-      "hello-reason": "bin/Hello.exe"
+      "Hello.exe": "bin/Hello.exe"
     },
     files: [
       "_export/",
