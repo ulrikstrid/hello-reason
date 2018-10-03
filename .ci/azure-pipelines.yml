@@ -12,22 +12,7 @@ jobs:
       vmImage: ubuntu-16.04
 
     steps:
-      - task: NodeTool@0
-        displayName: "Use Node 8.x"
-        inputs:
-          versionSpec: 8.x
-
-      - script: "npm install -g esy@0.2.11 --unsafe-perm"
-        displayName: "install esy"
-
-      - script: "esy install"
-        displayName: "esy install"
-
-      - script: "esy build"
-        displayName: "esy build"
-
-      - script: "esy release"
-        displayName: "esy release"
+      - template: build-platform.yml
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: Linux"
@@ -41,22 +26,7 @@ jobs:
       demands: node.js
 
     steps:
-      - task: NodeTool@0
-        displayName: "Use Node 8.x"
-        inputs:
-          versionSpec: 8.x
-
-      - script: "npm install -g esy@0.2.11 --unsafe-perm"
-        displayName: "install esy"
-
-      - script: "esy install"
-        displayName: "esy install"
-
-      - script: "esy build"
-        displayName: "esy build"
-
-      - script: "esy release"
-        displayName: "esy release"
+      - template: build-platform.yml
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: macOS"
@@ -71,34 +41,7 @@ jobs:
       demands: npm
 
     steps:
-      - task: NodeTool@0
-        displayName: "Use Node 8.x"
-        inputs:
-          versionSpec: 8.x
-
-      - script: "npm install -g esy@0.2.11 --unsafe-perm"
-        displayName: "install esy"
-
-      - script: "esy install"
-        displayName: "esy install"
-        continueOnError: true
-
-      - script: "esy install"
-        displayName: "esy install"
-        continueOnError: true
-
-      - script: "esy install"
-        displayName: "esy install"
-        continueOnError: true
-
-      - script: "esy install"
-        displayName: "esy install"
-
-      - script: "esy build"
-        displayName: "esy build"
-
-      - script: "esy release"
-        displayName: "esy release"
+      - template: build-platform.yml
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: Windows"
@@ -118,63 +61,7 @@ jobs:
       demands: node.js
 
     steps:
-      - task: NodeTool@0
-        displayName: "Use Node 8.x"
-        inputs:
-          versionSpec: 8.x
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download Linux Artifacts"
-        inputs:
-          artifactName: Linux
-          downloadPath: "_release"
-
-      - script: "mkdir _release/platform-linux"
-        displayName: "Create _release/platform-linux"
-
-      - script: "cp -r _release/Linux/ _release/platform-linux"
-        displayName: "cp Linux"
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download macOS Artifacts"
-        inputs:
-          artifactName: macOS
-          downloadPath: "_release"
-
-      - script: "mkdir _release/platform-darwin"
-        displayName: "Create _release/platform-darwin"
-
-      - script: "cp -r _release/macOS/ _release/platform-darwin"
-        displayName: "cp macOS"
-
-      # - task: DownloadBuildArtifacts@0
-      #   displayName: "Download Windows Artifacts"
-      #   inputs:
-      #     artifactName: Windows
-      #     downloadPath: "_release"
-      #   continueOnError: true
-
-      # - script: "mkdir _release/platform-windows-x64"
-      #   displayName: "Create _release/platform-windows-x64"
-      #   continueOnError: true
-
-      # - script: "cp -r _release/Windows/ _release/platform-windows-x64"
-      #   displayName: "cp Windows"
-      #   continueOnError: true
-
-      - script: "node .ci/pipelines-release.js"
-        displayName: "node .ci/pipelines-release.js"
-        continueOnError: true
-
-      - script: "npm pack"
-        displayName: "npm pack"
-        workingDirectory: "_release"
-
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: Release"
-        inputs:
-          PathtoPublish: "_release/hello-reason-0.1.0.tgz"
-          ArtifactName: Release
+      - template: package-release.yml
 
   - job: TestInstallLinux
     displayName: Test install Linux
@@ -185,20 +72,7 @@ jobs:
       vmImage: ubuntu-16.04
 
     steps:
-      - checkout: none
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download release"
-        inputs:
-          artifactName: Release
-          downloadPath: "release"
-
-      - script: "npm i -g ./hello-reason-0.1.0.tgz"
-        displayName: "install release"
-        workingDirectory: "release/Release"
-
-      - script: "hello-reason"
-        displayName: "Test binary"
+      - template: test-release.yml
 
   - job: TestInstallmacOS
     displayName: Test install macOS
@@ -210,20 +84,7 @@ jobs:
       demands: node.js
 
     steps:
-      - checkout: none
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download release"
-        inputs:
-          artifactName: Release
-          downloadPath: "release"
-
-      - script: "npm i -g ./hello-reason-0.1.0.tgz"
-        displayName: "install release"
-        workingDirectory: "release/Release"
-
-      - script: "hello-reason"
-        displayName: "Test binary"
+      - template: test-release.yml
 
   - job: TestInstallWindows
     displayName: Test install Windows
@@ -235,17 +96,4 @@ jobs:
       demands: npm
 
     steps:
-      - checkout: none
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download release"
-        inputs:
-          artifactName: Release
-          downloadPath: "release"
-
-      - script: "npm i -g ./hello-reason-0.1.0.tgz"
-        displayName: "install release"
-        workingDirectory: "release/Release"
-
-      - script: "hello-reason"
-        displayName: "Test binary"
+      - template: test-release.yml
