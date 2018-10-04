@@ -67,11 +67,15 @@ jobs:
     displayName: Test install Linux
     dependsOn:
       - Release
+    variables:
+      NPM_CONFIG_PREFIX: "/.npm-global"
 
     pool:
       vmImage: ubuntu-16.04
 
     steps:
+      - script: mkdir ~/.npm-global
+
       - template: test-release.yml
 
   - job: TestInstallmacOS
