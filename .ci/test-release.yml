@@ -7,7 +7,7 @@ steps:
       artifactName: Release
       downloadPath: "release"
 
-  - script: "npm i -g ./hello-reason-0.1.0.tgz --unsafe-perm"
+  - script: "npm i -g ./hello-reason-0.1.0.tgz"
     displayName: "install release"
     workingDirectory: "release/Release"
 

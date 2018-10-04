@@ -67,14 +67,18 @@ jobs:
     displayName: Test install Linux
     dependsOn:
       - Release
-    variables:
-      NPM_CONFIG_PREFIX: "/.npm-global"
 
     pool:
       vmImage: ubuntu-16.04
 
     steps:
       - script: mkdir ~/.npm-global
+
+      - script: npm config set prefix '~/.npm-global'
+
+      - script: export PATH=~/.npm-global/bin:$PATH
+
+      - script: source ~/.profile
 
       - template: test-release.yml
 

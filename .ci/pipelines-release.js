@@ -66,4 +66,4 @@ fs.mkdirSync(path.join(__dirname, "..", "_release", "bin"));
 const binPath = path.join(__dirname, "..", "_release", "bin", "Hello.exe");
 
 fs.writeFileSync(binPath, placeholderFile);
-fs.chmodSync(binPath, 0755);
+fs.chmodSync(binPath, 0777);
