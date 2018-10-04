@@ -72,6 +72,7 @@ jobs:
 
     pool:
       vmImage: ubuntu-16.04
+      demands: bash
 
     steps:
       - script: mkdir ~/.npm-global
