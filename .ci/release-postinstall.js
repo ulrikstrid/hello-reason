@@ -133,6 +133,7 @@ var copyPlatformBinaries = platformPath => {
       fs.unlinkSync(destPath);
     }
     copyFileSync(sourcePath, destPath);
+    fs.chmodSync(destPath, 0777);
   });
 };
 
