@@ -72,17 +72,12 @@ jobs:
       vmImage: ubuntu-16.04
 
     steps:
-      - script: "mkdir ~/.npm-global"
-        displayName: "mkdir ~/.npm-global"
-
-      - script: "npm config set prefix '~/.npm-global'"
-        displayName: "npm config set prefix '~/.npm-global'"
-
-      - script: "export PATH=~/.npm-global/bin:$PATH"
-        displayName: "export PATH=~/.npm-global/bin:$PATH"
-
-      - script: "source ~/.profile"
-        displayName: "source ~/.profile"
+      - script: |
+          "mkdir ~/.npm-global"
+          "npm config set prefix '~/.npm-global'"
+          "export PATH=~/.npm-global/bin:$PATH"
+          "source ~/.profile"
+        displayName: "Workaround for global installs on Linux"
 
       - template: test-release.yml
 
