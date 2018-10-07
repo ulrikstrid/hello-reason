@@ -67,8 +67,6 @@ jobs:
     displayName: Test install Linux
     dependsOn:
       - Release
-    variables:
-      PATH: ~/.npm-global/bin:$PATH
 
     pool:
       vmImage: ubuntu-16.04
