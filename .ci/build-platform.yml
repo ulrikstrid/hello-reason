@@ -4,7 +4,7 @@ steps:
     inputs:
       versionSpec: 8.x
 
-  - script: "npm install -g esy@0.2.11 --unsafe-perm"
+  - script: "npm install -g esy@next --unsafe-perm"
     displayName: "install esy"
 
   - script: "esy install"
