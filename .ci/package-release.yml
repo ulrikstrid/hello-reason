@@ -28,20 +28,20 @@ steps:
   - script: "cp -r _release/macOS/ _release/platform-darwin"
     displayName: "cp macOS"
 
-  # - task: DownloadBuildArtifacts@0
-  #   displayName: "Download Windows Artifacts"
-  #   inputs:
-  #     artifactName: Windows
-  #     downloadPath: "_release"
-  #   continueOnError: true
+  - task: DownloadBuildArtifacts@0
+    displayName: "Download Windows Artifacts"
+    inputs:
+      artifactName: Windows
+      downloadPath: "_release"
+    continueOnError: true
 
-  # - script: "mkdir _release/platform-windows-x64"
-  #   displayName: "Create _release/platform-windows-x64"
-  #   continueOnError: true
+  - script: "mkdir _release/platform-windows-x64"
+    displayName: "Create _release/platform-windows-x64"
+    continueOnError: true
 
-  # - script: "cp -r _release/Windows/ _release/platform-windows-x64"
-  #   displayName: "cp Windows"
-  #   continueOnError: true
+  - script: "cp -r _release/Windows/ _release/platform-windows-x64"
+    displayName: "cp Windows"
+    continueOnError: true
 
   - script: "node .ci/pipelines-release.js"
     displayName: "node .ci/pipelines-release.js"
