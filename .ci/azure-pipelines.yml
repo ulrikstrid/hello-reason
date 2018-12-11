@@ -1,8 +1,5 @@
 name: Build npm release
 
-resources:
-  - repo: self
-
 trigger:
   - master
 
@@ -10,7 +7,6 @@ jobs:
   - job: Linux
     pool:
       vmImage: ubuntu-16.04
-
     steps:
       - template: build-platform.yml
 
@@ -24,7 +20,6 @@ jobs:
     pool:
       vmImage: macOS-10.13
       demands: node.js
-
     steps:
       - template: build-platform.yml
 
@@ -39,7 +34,6 @@ jobs:
     pool:
       vmImage: vs2017-win2016
       demands: npm
-
     steps:
       - template: build-platform.yml
 
@@ -55,11 +49,9 @@ jobs:
       - Linux
       - macOS
       - Windows
-
     pool:
       vmImage: macOS-10.13
       demands: node.js
-
     steps:
       - template: package-release.yml
 
@@ -67,29 +59,18 @@ jobs:
     displayName: Test install Linux
     dependsOn:
       - Release
-
     pool:
       vmImage: ubuntu-16.04
-
     steps:
-      - script: |
-          "mkdir ~/.npm-global"
-          "npm config set prefix '~/.npm-global'"
-          "export PATH=~/.npm-global/bin:$PATH"
-          "source ~/.profile"
-        displayName: "Workaround for global installs on Linux"
-
       - template: test-release.yml
 
   - job: TestInstallmacOS
     displayName: Test install macOS
     dependsOn:
       - Release
-
     pool:
       vmImage: macOS-10.13
       demands: node.js
-
     steps:
       - template: test-release.yml
 
@@ -97,10 +78,8 @@ jobs:
     displayName: Test install Windows
     dependsOn:
       - Release
-
     pool:
       vmImage: vs2017-win2016
       demands: npm
-
     steps:
       - template: test-release.yml
