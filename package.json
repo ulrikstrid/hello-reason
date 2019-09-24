@@ -16,7 +16,8 @@
     }
   },
   "scripts": {
-    "test": "esy x Hello",
+    "start": "esy x Hello",
+    "test": "esy x RunTests.exe",
     "doc": "esy dune build @doc"
   },
   "dependencies": {

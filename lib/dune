@@ -1,5 +1,13 @@
 (library
   (name lib)
   (flags (-w -40 -w +26))
-  (public_name hello-reason)
+  (public_name hello-reason.lib)
+  (modules (:standard \ Util_test))
   (libraries console.lib pastel.lib))
+
+(library
+  (name hello_reason_lib_test)
+  (public_name hello-reason.lib.test)
+  (modules Util_test)
+  (libraries hello-reason.lib hello-reason.test)
+  (flags -linkall -g -w -9))
